@@ -148,7 +148,7 @@ module.exports = {
 `npm install --save-dev @commitlint/config-conventional@12.1.4 @commitlint/cli@12.1.4`
 : 创建 commitlint.config.js
 
-```
+```js
 module.exports = {
   // 继承的规则
   extends: ['@commitlint/config-conventional'],
@@ -168,20 +168,20 @@ module.exports = {
         'test', // 增加测试
         'chore', // 构建过程或辅助工具的变动
         'revert', // 回退
-        'build' // 打包
-      ]
+        'build', // 打包
+      ],
     ],
     // subject 大小写不做校验
-    'subject-case': [0]
-  }
-}
+    'subject-case': [0],
+  },
+};
 ```
 
 # husky
 
 : 安装依赖：
 `npm install husky@7.0.1 --save-dev`
-:启动 `hooks` ， 生成 `.husky` 文件夹
+:启动 `hooks` ， 生成 `.husky` 文件夹 // git init 错误
 `npx husky install`
 :在 `package.json` 中生成 `prepare` 指令（ **需要 npm > 7.0 版本** ）
 `npm set-script prepare "husky install"`
@@ -217,4 +217,18 @@ module.exports = {
 
 npx lint-staged
 
+```
+
+# 开发环境使用 vite
+
+`cnpm i -D @vitejs/plugin-react-refresh vite`
+: 创建 vite.config.js
+
+```js
+import { defineConfig } from 'vite';
+import reactRefresh from '@vitejs/plugin-react-refresh';
+
+export default defineConfig({
+  plugins: [reactRefresh()],
+});
 ```
