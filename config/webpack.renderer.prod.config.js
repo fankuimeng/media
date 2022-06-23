@@ -5,10 +5,15 @@ const ClearScriptPlugin = require('./clearScriptPlugin');
 const path = (...path) => resolve(__dirname, ...path);
 
 module.exports = {
+  mode: 'production',
+  target: 'electron-main',
   entry: path('../src/index.tsx'),
   output: {
-    path: path('../dist'),
-    filename: '[name].js',
+    path: path('../dist/renderer/'),
+    filename: '[name].prod.js', // 输出则是每一个入口对应一个文件夹
+  },
+  node: {
+    __dirname: false,
   },
   module: {
     rules: [
@@ -24,7 +29,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'], // 自动解析确定的扩展
+    extensions: ['.tsx', '.ts', '.js', '.jsx'], // 自动解析确定的扩展
   },
   plugins: [
     new HtmlWebpackPlugin({
