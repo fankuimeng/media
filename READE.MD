@@ -232,3 +232,33 @@ export default defineConfig({
   plugins: [reactRefresh()],
 });
 ```
+
+# '~antd/es/list/style/index.less' wasn't found. Tried -
+
+1. 原因 ：不能解析 `npm i less -D`
+2. vite 配置
+
+```js
+css: {
+  preprocessorOptions: {
+    less: {
+      javascriptEnabled: true,
+    },
+  },
+},
+resolve: {
+  alias: [
+    {
+      find: /^~/,
+      replacement: '',
+    },
+    {
+      find: '@',
+      replacement: path.resolve(__dirname, './src')
+    }
+  ],
+}
+
+```
+
+# vite 预编译太慢 首次预编译 `npm i -D vite-plugin-optimize-persist vite-plugin-package-config`

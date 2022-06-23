@@ -1,24 +1,16 @@
 import React, { useState } from 'react';
 import logo from '../assets/images/logo.svg';
-import 'antd/dist/antd.less';
 
-import { LikeOutlined, UserOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import type { ProSettings } from '@ant-design/pro-components';
-import { Avatar, Button, Descriptions, Result, Space, Statistic } from 'antd';
-
-import {
-  PageContainer,
-  ProLayout,
-  SettingDrawer,
-} from '@ant-design/pro-components';
+import { Avatar } from 'antd';
+import { ProLayout, SettingDrawer } from '@ant-design/pro-layout';
 
 import defaultProps from '../_defaultProps';
 
 import './App.css';
 
 const App: React.FC = function () {
-  console.log('223');
-
   const [settings, setSetting] = useState<Partial<ProSettings> | undefined>({
     fixSiderbar: true,
   });
@@ -32,12 +24,14 @@ const App: React.FC = function () {
     >
       <ProLayout
         {...defaultProps}
+        title={''}
+        logo={logo}
         location={{
           pathname,
         }}
-        // waterMarkProps={{
-        //   content: 'Pro Layout',
-        // }}
+        waterMarkProps={{
+          content: 'Pro Layout',
+        }}
         menuFooterRender={(props: { collapsed: any }) => {
           return (
             <a
@@ -51,19 +45,7 @@ const App: React.FC = function () {
               href="https://preview.pro.ant.design/dashboard/analysis"
               target="_blank"
               rel="noreferrer"
-            >
-              <img
-                alt="pro-logo"
-                src="https://procomponents.ant.design/favicon.ico"
-                style={{
-                  width: 16,
-                  height: 16,
-                  margin: '0 16px',
-                  marginRight: 10,
-                }}
-              />
-              {!props?.collapsed && 'Preview Pro'}
-            </a>
+            ></a>
           );
         }}
         onMenuHeaderClick={(e: any) => console.log(e)}
@@ -106,34 +88,34 @@ const App: React.FC = function () {
   );
 };
 
-const c: React.FC = function () {
-  return (
-    <div className="top-bar">
-      <div className="top-bar-logo">
-        <img src={logo} alt="LOGO" />
-      </div>
-      <div className="top-bar-main">
-        <div className="top-bar-control">{/* <controls /> */}</div>
-        <div className="top-bar-search">{/* <search-box /> */}</div>
-        <div className="top-bar-menu">
-          <div className="top-bar-menu-user">
-            <div className="item">{/* <user-info /> */}</div>
-            <div className="item">{/* <theme-setting /> */}</div>
-            <div
-              className="item"
-              // @click="$router.push({ path: '/setting' })"
-            >
-              {/* <a-icon type="setting" className="icon" /> */}
-            </div>
-            <div className="item" v-if="userId">
-              退出
-            </div>
-          </div>
-          {/* <frame-actions /> */}
-        </div>
-      </div>
-    </div>
-  );
-};
+// const c: React.FC = function () {
+//   return (
+//     <div className="top-bar">
+//       <div className="top-bar-logo">
+//         <img src={logo} alt="LOGO" />
+//       </div>
+//       <div className="top-bar-main">
+//         <div className="top-bar-control">{/* <controls /> */}</div>
+//         <div className="top-bar-search">{/* <search-box /> */}</div>
+//         <div className="top-bar-menu">
+//           <div className="top-bar-menu-user">
+//             <div className="item">{/* <user-info /> */}</div>
+//             <div className="item">{/* <theme-setting /> */}</div>
+//             <div
+//               className="item"
+//               // @click="$router.push({ path: '/setting' })"
+//             >
+//               {/* <a-icon type="setting" className="icon" /> */}
+//             </div>
+//             <div className="item" v-if="userId">
+//               退出
+//             </div>
+//           </div>
+//           {/* <frame-actions /> */}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
 export default App;

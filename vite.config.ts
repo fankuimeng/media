@@ -2,9 +2,14 @@ import { defineConfig } from 'vite';
 import reactRefresh from '@vitejs/plugin-react-refresh';
 import vitePluginImp from 'vite-plugin-imp';
 import path from 'path';
+import OptimizationPersist from 'vite-plugin-optimize-persist';
+import PkgConfig from 'vite-plugin-package-config';
+
 export default defineConfig({
   plugins: [
     reactRefresh(),
+    PkgConfig(),
+    OptimizationPersist(),
     vitePluginImp({
       libList: [
         {
