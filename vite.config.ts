@@ -22,7 +22,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       less: {
-        // 支持内联 JavaScript
+        // 支持内联 JavaScrip
         javascriptEnabled: true,
       },
     },
