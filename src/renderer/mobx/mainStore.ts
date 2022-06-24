@@ -2,14 +2,15 @@ import { makeAutoObservable } from 'mobx';
 // import { request } from '../../utils/request';
 
 class MainStore {
-  constructor(rootStore) {
+  rootStore;
+  constructor(rootStore: any) {
     this.rootStore = rootStore;
     makeAutoObservable(this, {}, { autoBind: true });
   }
   state = {
-    themeColor: '#25b864',
+    themeColor: '#c62f2f',
   };
-  setThemeColor(data) {
+  setThemeColor(data: string) {
     this.state.themeColor = data;
   }
   get getThemeColor() {

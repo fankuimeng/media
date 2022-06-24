@@ -262,3 +262,5 @@ resolve: {
 ```
 
 # vite 预编译太慢 首次预编译 `npm i -D vite-plugin-optimize-persist vite-plugin-package-config`
+
+# 深坑 bug electron 生产环境访问静态文件 所以不能使用 history 只能使用 hash 路由

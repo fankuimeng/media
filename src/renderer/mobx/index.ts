@@ -2,6 +2,7 @@ import { createContext, useContext } from 'react';
 import MainStore from './mainStore';
 
 class RootStore {
+  mainStore;
   constructor() {
     this.mainStore = new MainStore(this);
   }

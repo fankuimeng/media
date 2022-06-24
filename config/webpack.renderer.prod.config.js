@@ -6,8 +6,8 @@ const path = (...path) => resolve(__dirname, ...path);
 
 module.exports = {
   mode: 'production',
-  target: 'electron-main',
-  entry: path('../src/index.tsx'),
+  target: 'electron-preload',
+  entry: path('../src/renderer/main/index.tsx'),
   output: {
     path: path('../dist/renderer/'),
     filename: '[name].prod.js', // 输出则是每一个入口对应一个文件夹
@@ -24,7 +24,77 @@ module.exports = {
       },
       {
         test: /.[le|c]ss$/,
-        use: ['style-loader', 'css-loader', 'less-loader'],
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'less-loader',
+            options: {
+              lessOptions: {
+                javascriptEnabled: true,
+              },
+            },
+          },
+        ],
+      },
+      // 处理字体文件 WOFF
+      {
+        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            mimetype: 'application/font-woff',
+          },
+        },
+      },
+      // 处理字体文件 WOFF2
+      {
+        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            mimetype: 'application/font-woff',
+          },
+        },
+      },
+      // 处理字体文件 TTF
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            mimetype: 'application/octet-stream',
+          },
+        },
+      },
+      // 处理字体文件 EOT
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        use: 'file-loader',
+      },
+      // 处理svg文件 SVG
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            mimetype: 'image/svg+xml',
+          },
+        },
+      },
+      // 处理图片
+      {
+        test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 5000,
+          },
+        },
       },
     ],
   },

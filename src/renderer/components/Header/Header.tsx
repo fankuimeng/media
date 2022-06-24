@@ -9,10 +9,10 @@ import {
   BorderOutlined,
   ShrinkOutlined,
   SettingOutlined,
-  SkinOutlined,
 } from '@ant-design/icons';
 import UserInfo from './UserInfo';
 import { useNavigate } from 'react-router-dom';
+import ThemeSetting from './ThemeSetting';
 
 const Header: React.FC = function () {
   const history = useNavigate();
@@ -35,7 +35,7 @@ const Header: React.FC = function () {
               <UserInfo></UserInfo>
             </div>
             <div className="item">
-              <SkinOutlined style={{ fontSize: '16px' }} />
+              <ThemeSetting />
             </div>
             <div className="item" onClick={() => history('/setting')}>
               <SettingOutlined className="icon" />
