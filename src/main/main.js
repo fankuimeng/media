@@ -1,4 +1,6 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
+
+const remoteMain = require('@electron/remote/main');
 const path = require('path');
 // const pkg = require('../../package');
 const previewIcon =
@@ -42,17 +44,22 @@ app.on('ready', () => {
     webPreferences: {
       webSecurity: false,
       nodeIntegration: true,
-      enableRemoteModule: true,
       contextIsolation: false,
     },
   };
 
+  let mainWindow = null;
   const urlLocation =
     process.env.NODE_ENV === 'dev'
       ? 'http://localhost:8002'
       : `file://${path.join(__dirname, '../renderer/index.html')}`;
 
-  let mainWindow = new AppWindow(mainWindowConfig, urlLocation);
+  mainWindow = globalThis.mainWindow = new AppWindow(
+    mainWindowConfig,
+    urlLocation
+  );
+  remoteMain.initialize();
+  remoteMain.enable(mainWindow.webContents);
   if (process.platform === 'win32') {
     // app.setAppUserModelId(pkg.appId);
     // 去除原生顶部菜单栏
@@ -62,7 +69,15 @@ app.on('ready', () => {
   }
   if (process.env.NODE_ENV === 'dev') mainWindow.webContents.openDevTools();
 
-  mainWindow.on('closed', () => {
+  //接收渲染进程的信息
+  ipcMain.on('window-min', function () {
+    mainWindow.minimize();
+  });
+  ipcMain.on('window-max', (e, isMax) => {
+    isMax ? mainWindow.unmaximize() : mainWindow.maximize();
+  });
+
+  ipcMain.on('window-closed', function () {
     mainWindow = null;
     app.quit();
   });
