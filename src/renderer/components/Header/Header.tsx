@@ -18,11 +18,6 @@ import {
   ipcRenderer as _ipcRenderer,
   isWeb,
 } from '../../utils';
-// import { ipcRenderer } from 'electron';
-// const { ipcRenderer } = require('electron');
-// const { getCurrentWindow } = require('@electron/remote');
-
-// import { getCurrentWindow } from '@electron/remote';
 
 const Header: React.FC = function () {
   const history = useNavigate();
