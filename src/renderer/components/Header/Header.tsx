@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../../assets/images/logo.svg';
 import Controls from './Controls';
 import './Header.less';
@@ -13,13 +13,61 @@ import {
 import UserInfo from './UserInfo';
 import { useNavigate } from 'react-router-dom';
 import ThemeSetting from './ThemeSetting';
+import {
+  getCurrentWindow as _getCurrentWindow,
+  ipcRenderer as _ipcRenderer,
+  isWeb,
+} from '../../utils';
+// import { ipcRenderer } from 'electron';
+// const { ipcRenderer } = require('electron');
+// const { getCurrentWindow } = require('@electron/remote');
+
+// import { getCurrentWindow } from '@electron/remote';
 
 const Header: React.FC = function () {
   const history = useNavigate();
+  const [isMax, setIsMax] = useState(() => {
+    let getCurrentWindow: null | Electron.CrossProcessExports.BrowserWindow =
+      null;
+    _getCurrentWindow(result => {
+      getCurrentWindow = result;
+    });
+    // 使用web模式
+    return getCurrentWindow ? getCurrentWindow.isMaximized : true;
+  });
+  function setFrame(action: string) {
+    let ipcRenderer: null | Electron.IpcRenderer = null;
+    _ipcRenderer(result => {
+      ipcRenderer = result;
+    });
+    switch (action) {
+      case 'min':
+        ipcRenderer.send('window-min');
+        break;
+      case 'plus':
+        ipcRenderer.send('window-max', isMax);
+        setIsMax(!isMax);
+        break;
+      case 'close':
+        ipcRenderer.send('window-closed');
+        break;
+      case 'mini':
+        ipcRenderer.send('toggle-mini', {
+          value: true,
+        });
+        break;
+    }
+  }
 
   return (
     <div className="top-bar">
-      <div className="top-bar-logo" onClick={() => history('/')}>
+      <div
+        className="top-bar-logo"
+        onClick={() => {
+          console.log('222');
+          history('/');
+        }}
+      >
         <img src={logo} alt="LOGO" />
       </div>
       <div className="top-bar-main">
@@ -41,14 +89,29 @@ const Header: React.FC = function () {
               <SettingOutlined className="icon" />
             </div>
           </div>
-          <div className="frame-actions">
-            <MinusOutlined className="window-action"></MinusOutlined>
-            {true ? (
-              <BorderOutlined className="window-action"></BorderOutlined>
+          <div
+            className="frame-actions"
+            style={{ display: `${isWeb() ? 'none' : 'block'}` }}
+          >
+            <MinusOutlined
+              onClick={() => setFrame('min')}
+              className="window-action"
+            ></MinusOutlined>
+            {!isMax ? (
+              <BorderOutlined
+                onClick={() => setFrame('plus')}
+                className="window-action"
+              ></BorderOutlined>
             ) : (
-              <ShrinkOutlined className="window-action"></ShrinkOutlined>
+              <ShrinkOutlined
+                onClick={() => setFrame('plus')}
+                className="window-action"
+              ></ShrinkOutlined>
             )}
-            <CloseOutlined className="window-action"></CloseOutlined>
+            <CloseOutlined
+              className="window-action"
+              onClick={() => setFrame('close')}
+            ></CloseOutlined>
           </div>
         </div>
       </div>

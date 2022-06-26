@@ -13,6 +13,7 @@ import { observer } from 'mobx-react-lite';
 
 import './layout.css';
 import useStore from '../mobx';
+import PlayBar from '../components/PlayBar/PlayBar';
 
 const Layout: React.FC = observer(function (props) {
   const {
@@ -28,9 +29,9 @@ const Layout: React.FC = observer(function (props) {
   const [pathname, setPathname] = useState('/home');
   return (
     <div
-      id="test-pro-layout"
+      id="pro-layout"
       style={{
-        height: '100vh',
+        height: 'calc(100vh - 60px)',
       }}
     >
       <ProLayout
@@ -46,6 +47,7 @@ const Layout: React.FC = observer(function (props) {
         waterMarkProps={{
           content: '网易云音乐',
         }}
+        collapsedButtonRender={null}
         menuItemRender={(
           item: { path: any },
           dom:
@@ -59,8 +61,7 @@ const Layout: React.FC = observer(function (props) {
           <a
             onClick={() => {
               console.log(item, dom);
-
-              setPathname(item.path || '/home');
+              setPathname(item.path || '/');
             }}
           >
             {dom}
@@ -73,7 +74,9 @@ const Layout: React.FC = observer(function (props) {
             title: null,
             breadcrumb: {},
           }}
-        ></PageContainer>
+        >
+          <Outlet />
+        </PageContainer>
       </ProLayout>
       {/* <SettingDrawer
         pathname={pathname}
@@ -100,6 +103,7 @@ const Layout: React.FC = observer(function (props) {
         //   }}
         //   disableUrlParams={false}
       /> */}
+      <PlayBar></PlayBar>
     </div>
   );
 });

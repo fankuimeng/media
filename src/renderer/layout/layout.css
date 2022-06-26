@@ -1,10 +1,16 @@
 @import url('../styles/cssAviable.css');
-.ant-pro-setting-drawer-handle {
+#pro-layout .ant-pro-setting-drawer-handle {
   background-color: var(--setting-color) !important;
 }
-#test-pro-layout .ant-pro-global-header-layout-mix {
+/* .ant-pro-global-header-layout-mix {
+  background-color: var(--theme-style) !important;
+} */
+#pro-layout .ant-pro-global-header-layout-mix {
   background-color: var(--theme-style) !important;
 }
-.ant-pro-sider.ant-layout-sider-light .ant-menu-item a {
+#pro-layout .ant-pro-sider.ant-layout-sider-light .ant-menu-item a {
   color: var(--setting-color) !important;
+}
+#pro-layout .ant-layout-sider {
+  height: calc(100% - 60px) !important;
 }
