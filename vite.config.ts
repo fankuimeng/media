@@ -44,4 +44,5 @@ export default defineConfig({
     port: 8002,
     https: false,
   },
+  sourcemap: true,
 });

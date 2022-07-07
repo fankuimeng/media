@@ -3,7 +3,7 @@ import { SkinOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import CustomIcon from '../CustomIcon/CustomIcon';
 import React from 'react';
 import { observer } from 'mobx-react-lite';
-import useStore from '../../mobx';
+import { useStore } from '../../mobx';
 import { setThemeColor } from '../../utils';
 
 interface colorObjectProps {

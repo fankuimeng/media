@@ -11,13 +11,14 @@ import {
 import defaultProps from './_defaultProps';
 import { observer } from 'mobx-react-lite';
 
-import './layout.css';
-import useStore from '../mobx';
+import { useStore } from '../mobx';
 import PlayBar from '../components/PlayBar/PlayBar';
+import './layout.css';
+import LyricPage from '../main/pages/LyricPage';
 
 const Layout: React.FC = observer(function (props) {
   const {
-    mainStore: { getThemeColor },
+    mainStore: { getThemeColor, setPlaySetting, getPlaySetting },
   } = useStore();
 
   const setting = {
@@ -41,6 +42,7 @@ const Layout: React.FC = observer(function (props) {
         headerContentRender={() => {
           return <Header></Header>;
         }}
+        disableMobile={true}
         location={{
           pathname,
         }}
@@ -60,7 +62,6 @@ const Layout: React.FC = observer(function (props) {
         ) => (
           <a
             onClick={() => {
-              console.log(item, dom);
               setPathname(item.path || '/');
             }}
           >
@@ -104,6 +105,7 @@ const Layout: React.FC = observer(function (props) {
         //   disableUrlParams={false}
       /> */}
       <PlayBar></PlayBar>
+      {getPlaySetting.isShowLyric ? <LyricPage></LyricPage> : null}
     </div>
   );
 });

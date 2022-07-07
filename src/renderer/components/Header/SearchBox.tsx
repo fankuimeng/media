@@ -14,7 +14,7 @@ export default function SearchBox() {
       <Input
         className="header-search"
         placeholder="搜索音乐、视频、歌词、电台..."
-        allow-clear
+        allowClear
         suffix={<SearchOutlined />}
       />
     </Popover>

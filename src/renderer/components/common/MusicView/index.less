@@ -1,0 +1,34 @@
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+#wrap,
+.avatar-wrapper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1111;
+  transform: translate(-50%, -50%);
+  -webkit-app-region: no-drag;
+}
+.avatar-wrapper {
+  width: 640px;
+  height: 640px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .avatar {
+    border-radius: 50%;
+    width: 260px;
+    height: 260px;
+    z-index: -1;
+    animation: rotate 20s linear infinite both;
+    &.paused {
+      animation-play-state: paused;
+    }
+  }
+}

@@ -1,74 +1,103 @@
 import { makeAutoObservable } from 'mobx';
 // import { request } from '../../utils/request';
-
+import { RootStore } from './index';
+import { LyricStateType, MusicInfoType, PlaySettingType } from './type';
 class MainStore {
   rootStore;
-  constructor(rootStore: any) {
+  constructor(rootStore: RootStore) {
     this.rootStore = rootStore;
     makeAutoObservable(this, {}, { autoBind: true });
   }
   state = {
     themeColor: '#c62f2f',
   };
+  playList: MusicInfoType[] = [
+    {
+      musicName: '如果早点了解',
+      MusicPath: 'http://127.0.0.1:5500/124.mp3',
+    },
+    // {
+    //   musicName: '五十年以后',
+    //   MusicPath: 'http://127.0.0.1:5500/mfk.mp3',
+    // },
+    // {
+    //   musicName: '进阶',
+    //   MusicPath: 'http://127.0.0.1:5500/mfk.flac',
+    // },
+  ];
+
+  lyricState: LyricStateType = {
+    lines: [],
+    curLine: 0,
+    lyric: '',
+  };
+
+  currentMusic: MusicInfoType = this.playList.length
+    ? this.playList[0]
+    : {
+        musicName: '',
+        MusicPath: '',
+      };
+
+  playSetting: PlaySettingType = {
+    isShowPlayBar: true,
+    playMode: 'liebiaoxunhuan',
+    volume: 0.5,
+    isShowLyric: false,
+    isMuted: false,
+  };
+
+  setPlaySetting(playSetting: PlaySettingType) {
+    this.playSetting = { ...playSetting };
+  }
+
+  get getPlaySetting() {
+    return this.playSetting;
+  }
   setThemeColor(data: string) {
     this.state.themeColor = data;
   }
   get getThemeColor() {
     return this.state.themeColor;
   }
-  //   async getTodos() {
-  //     const data = await request.get('/todos');
-  //     this.setTodos(data);
-  //   }
-  //   setTodos(data) {
-  //     this.state.list = data;
-  //   }
-  //   async delTodos(id) {
-  //     await request.delete(`/todos/${id}`);
-  //     await this.getTodos();
-  //   }
-  //   async updateTodos(id, key, value) {
-  //     await request.patch(`/todos/${id}`, { [key]: value });
-  //     await this.getTodos();
-  //   }
-  //   async addTodos(name) {
-  //     await request.post('/todos', {
-  //       name,
-  //       done: false,
-  //     });
-  //     await this.getTodos();
-  //   }
-  //   get mainRadioStatus() {
-  //     return this.state.list.every(item => item.done);
-  //   }
-  //   async updatePerRadioStatus(done) {
-  //     const promiseArr = this.state.list.map(item =>
-  //       this.updateTodos(item.id, 'done', done)
-  //     );
-  //     await Promise.all(promiseArr);
-  //     await this.getTodos();
-  //   }
 
-  //   get completed() {
-  //     return this.state.list.filter(item => item.done);
-  //   }
+  get getVolume() {
+    return this.playSetting.volume;
+  }
+  setVolume(volume: number) {
+    this.playSetting.volume = volume;
+  }
+  setCurrentMusic(music: MusicInfoType) {
+    this.currentMusic = music;
+  }
+  get getCurrentMusic() {
+    return this.currentMusic;
+  }
 
-  //   async clearCompleted() {
-  //     const promiseArr = this.completed.map(item => this.delTodos(item.id));
-  //     await Promise.all(promiseArr);
-  //     await this.getTodos();
-  //   }
-  //   get unCompleted() {
-  //     return this.state.list.filter(item => !item.done);
-  //   }
-  //   get renderList() {
-  //     const active = this.rootStore.footerStore.state.active;
-  //     console.log(active);
-  //     return active === 'Active'
-  //       ? this.unCompleted
-  //       : active === 'Completed'
-  //       ? this.completed
-  //       : this.state.list;
-  //   }
+  get getPlayList() {
+    return this.playList;
+  }
+  setPlayList(playList: MusicInfoType[]) {
+    return (this.playList = playList);
+  }
+
+  get getIsMuted() {
+    return this.playSetting.isMuted;
+  }
+  setIsMuted(isMuted: boolean) {
+    this.playSetting.isMuted = isMuted;
+  }
+  get getLyricState() {
+    return this.lyricState;
+  }
+  setLyricState(lyricState: LyricStateType) {
+    this.lyricState = { ...lyricState };
+  }
+  get getCurLine() {
+    return this.lyricState.curLine;
+  }
+  setCurLine(curLine: number) {
+    this.lyricState.curLine = curLine;
+  }
 }
 export default MainStore;

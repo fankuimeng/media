@@ -13,6 +13,10 @@ class AppWindow extends BrowserWindow {
     const basicConfig = {
       width: 800,
       height: 600,
+      maximizable: true,
+      minimizable: true,
+
+      resizable: true,
       webPreferences: {
         contextIsolation: false,
         nodeIntegration: true,

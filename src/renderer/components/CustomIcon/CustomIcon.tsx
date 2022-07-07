@@ -12,10 +12,13 @@ const IconFont = createFromIconfontCN({
 interface CustomIconProps {
   type: string;
   className?: string;
+  onClick?: (e?: React.MouseEvent<HTMLOrSVGElement>) => void;
   required?: Boolean;
 }
-function CustomIcon({ type, className }: CustomIconProps) {
-  return <IconFont className={className} type={`icon-${type}`} />;
+function CustomIcon({ type, className, onClick }: CustomIconProps) {
+  return (
+    <IconFont className={className} type={`icon-${type}`} onClick={onClick} />
+  );
 }
 
 export default CustomIcon;

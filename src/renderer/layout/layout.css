@@ -14,3 +14,7 @@
 #pro-layout .ant-layout-sider {
   height: calc(100% - 60px) !important;
 }
+
+#pro-layout .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: transparent !important;
+}

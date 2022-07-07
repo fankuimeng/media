@@ -1,0 +1,45 @@
+.lyric {
+  position: absolute;
+  left: 0;
+  top: 10%;
+  width: 100%;
+  bottom: 28%;
+  color: #fff;
+  text-align: center;
+  -webkit-app-region: no-drag;
+}
+.music-view {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 60px;
+  right: 0;
+  z-index: 9999;
+  overflow: hidden;
+  -webkit-app-region: drag;
+  background-color: rgba(0, 0, 0, 0.623);
+  .bg-player {
+    position: absolute;
+    left: -60px;
+    top: -60px;
+    bottom: -60px;
+    right: -60px;
+    z-index: -1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
+    filter: blur(30px) brightness(0.5);
+  }
+  .icon {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 30px;
+    color: rgba(255, 255, 255, 0.2);
+    -webkit-app-region: no-drag;
+    &:hover {
+      color: rgba(255, 255, 255, 1);
+      cursor: pointer;
+    }
+  }
+}

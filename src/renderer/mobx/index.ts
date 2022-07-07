@@ -2,12 +2,15 @@ import { createContext, useContext } from 'react';
 import MainStore from './mainStore';
 
 class RootStore {
-  mainStore;
+  mainStore: MainStore;
   constructor() {
     this.mainStore = new MainStore(this);
   }
 }
 const Context = createContext(new RootStore());
-export default function useStore() {
+
+function useStore() {
   return useContext(Context);
 }
+
+export { RootStore, useStore };

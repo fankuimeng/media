@@ -13,7 +13,7 @@ import { debounce } from '../../utils';
 
 interface progressBarPropsType {
   percent?: number;
-  bufferedPercent?: number;
+  bufferedPercent?: string;
   size?: String;
   waiting?: Boolean;
   percentChanged?: (calcPercent: number) => void;
@@ -24,14 +24,14 @@ interface progressBarPropsType {
 
 const mouse = {
   startX: 0,
-  isDown: true,
+  isDown: false,
   left: 0,
   moveX: 0,
 };
 
 function ProgressBar({
   percent = 0,
-  bufferedPercent = 0,
+  bufferedPercent,
   size = 'default',
   waiting = false,
   percentChanged,
@@ -61,13 +61,13 @@ function ProgressBar({
         let pageX = e.pageX;
         let diff = pageX - _progressBar?.getBoundingClientRect().left;
         let percent = (diff / _progressBar?.clientWidth).toFixed(2);
-        virtualBarMove(pageX, Number(percent));
+        virtualBarMove && virtualBarMove(pageX, Number(percent));
       }, 500)
     );
     virtualBar.current?.addEventListener(
       'mouseleave',
       debounce(() => {
-        virtualBarLeave();
+        virtualBarLeave && virtualBarLeave();
       }, 200)
     );
   }, []);
@@ -81,11 +81,13 @@ function ProgressBar({
       changeProgressbarWidth(percent);
     }
   }, [percent]);
+
   useEffect(() => {
     if (percent >= 0) {
       changeBufferedWidth(percent);
     }
   }, [bufferedPercent]);
+
   const handleResize = useCallback((percent: number) => {
     changeBufferedWidth(percent);
     changeProgressbarWidth(percent);
@@ -181,11 +183,13 @@ function ProgressBar({
         ref={progress}
         style={{ width: `${position.progressOffsetWidth}px` }}
       ></div>
-      <div
-        className="buffered"
-        ref={buffered}
-        style={{ width: `${position.bufferedOffsetWidth}px` }}
-      ></div>
+      {bufferedPercent ? (
+        <div
+          className="buffered"
+          ref={buffered}
+          style={{ width: `${position.bufferedOffsetWidth}px` }}
+        ></div>
+      ) : null}
       <div
         className={size === 'small' ? 'handle small' : 'handle'}
         onMouseDown={onMouseDown}
@@ -200,7 +204,9 @@ function ProgressBar({
           )
         }
       </div>
-      <div className="virtual-bar" ref={virtualBar}></div>
+      {bufferedPercent ? (
+        <div className="virtual-bar" ref={virtualBar}></div>
+      ) : null}
     </div>
   );
 }
